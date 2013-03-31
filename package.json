@@ -1,0 +1,26 @@
+{
+  "name": "level-inc",
+  "version": "0.0.1",
+  "description": "Increment leveldb keys",
+  "main": "index.js",
+  "peerDependencies": {
+    "levelup": "0.x.x"
+  },
+  "devDependencies": {
+    "tape": "~0.3.2"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "levelup",
+    "leveldb",
+    "incrementally"
+  ],
+  "author": "Hugh Kennedy <hughskennedy@gmail.com> (http://hughskennedy.com/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hughsk/level-inc.git"
+  }
+}
