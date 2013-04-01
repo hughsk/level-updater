@@ -1,7 +1,7 @@
 {
-  "name": "level-inc",
+  "name": "level-updater",
   "version": "0.0.1",
-  "description": "Increment leveldb keys",
+  "description": "Pseudo-atomic updates for levelup",
   "main": "index.js",
   "peerDependencies": {
     "levelup": "0.x.x"
@@ -16,12 +16,14 @@
   "keywords": [
     "levelup",
     "leveldb",
-    "incrementally"
+    "incrementally",
+    "atomic",
+    "updates"
   ],
   "author": "Hugh Kennedy <hughskennedy@gmail.com> (http://hughskennedy.com/)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/hughsk/level-inc.git"
+    "url": "git://github.com/hughsk/level-updater.git"
   }
 }
