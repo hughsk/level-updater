@@ -7,6 +7,7 @@
     "levelup": "0.x.x"
   },
   "devDependencies": {
+    "levelup": "0.6.x",
     "tape": "~0.3.2"
   },
   "scripts": {
