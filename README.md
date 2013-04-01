@@ -1,9 +1,11 @@
-# level-inc [![Build Status](https://secure.travis-ci.org/hughsk/level-inc.png?branch=master)](http://travis-ci.org/hughsk/level-inc)
+# level-updater [![Build Status](https://secure.travis-ci.org/hughsk/level-update.png?branch=master)](http://travis-ci.org/hughsk/level-updater)
 
-An increment call for [levelup](http://github.com/rvagg/node-levelup).
+Pseudo-atomic update methods for
+[levelup](http://github.com/rvagg/node-levelup). Started out as
+[level-inc](http://github.com/hughsk/level-inc), but this is more useful.
 
-Why? Because if you're counting up a lot, the gap between a `get` and a `put`
-becomes important:
+Why? If you're making a lot of changes dependent on the current value of a
+key, you'll find the gap between a `get` and a `put` becomes important:
 
 ``` javascript
 for (var i = 0; i < 100; i += 1) {
@@ -17,25 +19,40 @@ for (var i = 0; i < 100; i += 1) {
 ```
 
 The above example will probably result in `a-key` being set to 1 and staying
-there. `level-inc` keeps track of overlapping calls like this and handles them
-cleanly.
+there. `level-updater` keeps track of overlapping calls like this and handles
+them cleanly for you.
 
 ## Installation ##
 
 ``` bash
-npm install level-inc
+npm install level-updater
 ```
 
 ## Usage ##
 
-**require('level-inc')(db)(key, amount, callback)**
+**require('level-updater')(db, updater)(key, [param], [callback])**
+
+When initializing:
+
+* `db` is the levelup instance to plug into.
+* `updater` is the method used to update each time a value is hit.
+
+And for each call:
+
+* `key` is the key to update.
+* `param` is an optional parameter for passing to `updater`.
+* `callback` is called after the new value has been stored in the database.
+
+Take this example for incrementing numbers:
 
 ``` javascript
 var db = require('levelup')(__dirname + '/db')
-var inc = require('level-inc')(db)
+var update = require('level-updater')
 var counter = 0
 
-db.inc = inc
+db.inc = update(db, function(value, param, key) {
+  return (value | 0) + param
+})
 
 for (var i = 0; i < 200; i += 1) {
   db.inc('some-key', 10, function() {
@@ -46,4 +63,27 @@ for (var i = 0; i < 200; i += 1) {
     })
   })
 }
+```
+
+And this for merging JSON objects:
+
+``` javascript
+var db = require('levelup')(__dirname + '/db')
+var update = require('level-updater', {
+  valueEncoding: 'json'
+})
+
+db.merge = update(db, function(original, merger) {
+  return Object.keys(param).reduce(function(current, key) {
+    current[key] = param[key]
+    return current
+  }, value || {})
+})
+
+db.merge('doc', { hello: 'world' })
+db.merge('doc', { lorem: 'ipsum' }, function(err) {
+  db.get('doc', function(err, val) {
+    // val === { hello: 'world', lorem: 'ipsum' }
+  })
+})
 ```
