@@ -1,4 +1,4 @@
-# level-updater [![Build Status](https://secure.travis-ci.org/hughsk/level-update.png?branch=master)](http://travis-ci.org/hughsk/level-updater)
+# level-updater [![Build Status](https://secure.travis-ci.org/hughsk/level-updater.png?branch=master)](http://travis-ci.org/hughsk/level-updater)
 
 Pseudo-atomic update methods for
 [levelup](http://github.com/rvagg/node-levelup). Started out as
