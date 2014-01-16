@@ -28,7 +28,7 @@ module.exports = function(db, updater) {
       delete cache[key]
 
       db.put(key, value, function(err) {
-        ready.map(function(cb) { return cb(err) })
+        ready.map(function(cb) { return cb(err, value) })
       })
     })
   }
