@@ -1,6 +1,6 @@
 {
   "name": "level-updater",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Pseudo-atomic updates for levelup",
   "main": "index.js",
   "peerDependencies": {
